@@ -1,0 +1,17 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #5b4fdb; /* Your main purple */
+  --color-primary-dark: ##3d2f8f; /* Darker purple for bg */
+  --color-accent: #7c6fe8; /* Lighter purple for buttons */
+  --font-display: "Segoe UI", system-ui, sans-serif;
+}
+body {
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(135deg, #3D2F8F 0%, #5B4FDB 100%);
+  min-height: 100vh;
+  color: white;
+  box-sizing: border-box;
+  font-family: var(--font-display);
+}
