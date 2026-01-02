@@ -20,3 +20,6 @@ body {
    text-shadow: 0 0 20px rgba(124, 111, 232, 0.8),
                       0 0 40px rgba(124, 111, 232, 0.4);
 }
+@utility btn-round{
+  @apply rounded-full font-semibold transition-all duration-200 hover:scale-105 active:scale-95 bg-accent text-white shadow-lg hover:shadow-xl h-16 w-16
+}
