@@ -15,3 +15,8 @@ body {
   box-sizing: border-box;
   font-family: var(--font-display);
 }
+@utility timer-digits {
+   font-family: 'Courier New', monospace;
+   text-shadow: 0 0 20px rgba(124, 111, 232, 0.8),
+                      0 0 40px rgba(124, 111, 232, 0.4);
+}

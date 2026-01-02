@@ -19,7 +19,7 @@ function formatTime(totalSeconds: number): string {
 // 3. The TimerDisplay component
 const TimerDisplay = ({ seconds }: TimerDisplayProps) => {
     return (
-        <div className='font-bold text-white text-7xl tracking-wider'>
+        <div className='font-bold text-7xl tracking-wider timer-digits'>
             {formatTime(seconds)}
         </div>
     )
