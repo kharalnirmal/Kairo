@@ -4,7 +4,7 @@
   --color-primary: #5b4fdb; /* Your main purple */
   --color-primary-dark: ##3d2f8f; /* Darker purple for bg */
   --color-accent: #7c6fe8; /* Lighter purple for buttons */
-  --font-display: "Segoe UI", system-ui, sans-serif;
+  --font-display: Poppins,"Segoe UI", system-ui, sans-serif;
 }
 body {
   margin: 0;
@@ -22,4 +22,39 @@ body {
 }
 @utility btn-round{
   @apply rounded-full font-semibold transition-all duration-200 hover:scale-105 active:scale-95 bg-accent text-white shadow-lg hover:shadow-xl h-16 w-16
+}
+@font-face {
+  font-family: Timer;
+  src: url(/fonts/Title.ttf);
+}
+@font-face {
+  font-family: "Poppins";
+  src: url("/fonts/Poppins-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Poppins";
+  src: url("/fonts/Poppins-Medium.ttf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Poppins";
+  src: url("/fonts/Poppins-SemiBold.ttf") format("truetype");
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Poppins";
+  src: url("/fonts/Poppins-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+}
+
+@utility font-poppins {
+  font-family: "Poppins", sans-serif;
 }
