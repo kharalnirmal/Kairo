@@ -1,14 +1,19 @@
-import React, { useEffect, useState } from 'react'
+import React, { use, useEffect, useState } from 'react'
 
 import SoundToggle from '../component/SoundToggle'
 import { TimerHeader } from '../component/TimerHeader'
 import { TimerDisplay } from '../component/TimerDisplay'
 import { ButttonControl } from '../component/ButttonControl'
 import { Penguin } from '../component/Penguine'
+import SettingsModal from '../component/SettingModal'
 
 const TimerScreen = () => {
- const [second, setSecond] = useState(1500)
  const [isPlaying, setisPlaying] = useState(false)
+ const [focusTime, setFocusTime] = useState(1500) // 25 min default
+const [breakTime, setBreakTime] = useState(300)  // 5 min default
+const [showSettings, setShowSettings] = useState(false)
+const [second, setSecond] = useState(focusTime)
+
 
 
  useEffect(() => {
@@ -25,9 +30,18 @@ const TimerScreen = () => {
  
 const handlePlay=()=>setisPlaying(true)
 const handlePause=()=>setisPlaying(false)
-const handleRepeat=()=>{
+const handleRepeat = () => {
   setisPlaying(false)
-  setSecond(1500)}
+  setSecond(focusTime)
+}
+  const handlesetting=()=> setShowSettings(true)
+
+
+const handleSaveSettings = (newFocusTime: number, newBreakTime: number) => {
+  setFocusTime(newFocusTime)
+  setBreakTime(newBreakTime)
+  setSecond(newFocusTime)
+}
 
 
 
@@ -51,7 +65,7 @@ const handleRepeat=()=>{
 
         {/* Bottom controls */}
         <div className="flex md:flex-row flex-col justify-center items-center gap-4 md:gap-20 mt-8 pb-6">
-          <ButttonControl onPlay={handlePlay} onPause={handlePause} onRepeat={handleRepeat} />
+          <ButttonControl onPlay={handlePlay} onPause={handlePause} onRepeat={handleRepeat} onSetting={handlesetting}/>
           <SoundToggle />
         </div>
         
@@ -66,7 +80,13 @@ const handleRepeat=()=>{
           <Penguin state='focus' size='large' />
         </div>
       </div>
-      
+       <SettingsModal 
+        isOpen={showSettings}
+        onClose={() => setShowSettings(false)}
+        onSave={handleSaveSettings}
+        currentFocusTime={focusTime}
+        currentBreakTime={breakTime}
+      />
     </div>
   )
 }
