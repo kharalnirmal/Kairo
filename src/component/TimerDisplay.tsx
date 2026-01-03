@@ -17,12 +17,11 @@ function formatTime(totalSeconds: number): string {
 
 
 // 3. The TimerDisplay component
-const TimerDisplay = ({ seconds }: TimerDisplayProps) => {
+export function TimerDisplay  ({ seconds }: TimerDisplayProps) {
     return (
-        <div className='font-bold text-7xl tracking-wider timer-digits'>
+        <div className='font-bold text-7xl sm:text-7xl md:text-8xl text-center tracking-wider timer-digits'>
             {formatTime(seconds)}
         </div>
     )
 }
 
-export default TimerDisplay

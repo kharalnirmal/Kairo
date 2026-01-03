@@ -1,5 +1,6 @@
 import React from 'react'
-import Button from './Button'
+import { Button } from './Button';
+
 interface ButtonControlProps{
     onPlay?:()=>void;
     onPause?:()=>void;
@@ -7,10 +8,10 @@ interface ButtonControlProps{
     onSetting?:()=>void;
 }
 
-const ButttonControl = ({onPlay,onPause,onRepeat,onSetting}:ButtonControlProps) => {
+export function ButttonControl  ({onPlay,onPause,onRepeat,onSetting}:ButtonControlProps)  {
 
   return (
-    <div className='flex justify-center items-center gap-2'>
+    <div className='flex justify-center items-center gap-2 md:gap-3'>
         <Button onClick={onPlay} className="btn-round">▶️</Button>
         <Button onClick={onPause} className="btn-round">⏸️</Button>
         <Button onClick={onRepeat} className="btn-round">🔁</Button>
@@ -19,4 +20,3 @@ const ButttonControl = ({onPlay,onPause,onRepeat,onSetting}:ButtonControlProps) 
   )
 }
 
-export default ButttonControl

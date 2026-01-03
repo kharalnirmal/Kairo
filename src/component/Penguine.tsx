@@ -4,7 +4,7 @@ interface PenguinProps {
     state: PenguinState;
     size?: "small" |"medium" | "large";
 }
-const Penguin = ({state , size = "medium" }:PenguinProps) => {
+export function Penguin  ({state , size = "medium" }:PenguinProps) {
 
  const PenguinImages = {
     focus: "/images/focus.png",
@@ -16,7 +16,7 @@ const Penguin = ({state , size = "medium" }:PenguinProps) => {
  const sizeStyles = {
     small: "w-16 h-16",
     medium: "w-32 h-32",
-    large: "w-64 h-64",
+    large: "md:w-[40vw] md:h-[40vw] sm:w-[40vh] sm:h-[40vh] h-64 w-64 ",
  }
 
   return (
@@ -26,4 +26,3 @@ const Penguin = ({state , size = "medium" }:PenguinProps) => {
   )
 }
 
-export default Penguin

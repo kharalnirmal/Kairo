@@ -4,7 +4,7 @@
   --color-primary: #5b4fdb; /* Your main purple */
   --color-primary-dark: ##3d2f8f; /* Darker purple for bg */
   --color-accent: #7c6fe8; /* Lighter purple for buttons */
-  --font-display: Poppins,"Segoe UI", system-ui, sans-serif;
+  --font-display: "Poppins","Segoe UI", system-ui, sans-serif;
 }
 body {
   margin: 0;
@@ -21,7 +21,7 @@ body {
                       0 0 40px rgba(124, 111, 232, 0.4);
 }
 @utility btn-round{
-  @apply rounded-full font-semibold transition-all duration-200 hover:scale-105 active:scale-95 bg-accent text-white shadow-lg hover:shadow-xl h-16 w-16
+  @apply rounded-full font-semibold transition-all duration-200 hover:scale-105 active:scale-95 bg-accent text-white shadow-lg hover:shadow-xl md:h-20 md:w-20 h-16 w-16  flex justify-center items-center md:gap-4 
 }
 @font-face {
   font-family: Timer;
@@ -57,4 +57,19 @@ body {
 
 @utility font-poppins {
   font-family: "Poppins", sans-serif;
+}
+
+@utility animate-fade-in {
+  animation: fadeIn 0.8s ease-in;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@utility text-glow-soft {
+  text-shadow:
+    0 0 3px rgba(255, 255, 255, 0.25),
+    0 0 6px rgba(255, 255, 255, 0.15);
 }
