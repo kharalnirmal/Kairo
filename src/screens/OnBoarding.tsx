@@ -1,4 +1,4 @@
-import React from 'react'
+
 import { Button } from '../component/Button'
 type OnBoardingProps = {
   onNext: () => void

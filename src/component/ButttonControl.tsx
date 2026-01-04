@@ -1,8 +1,7 @@
 // Importing necessary libraries and components
-import React from 'react'
+
 import { Button } from './Button';
 import { FaRegCirclePause, FaRegCirclePlay } from "react-icons/fa6";
-import { FaRegArrowAltCircleRight } from 'react-icons/fa';
 import { RiResetLeftFill } from 'react-icons/ri';
 import { IoSettings } from 'react-icons/io5';
 

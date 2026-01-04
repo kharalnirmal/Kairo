@@ -1,4 +1,4 @@
-import React from 'react'
+
 
 // 1. Define props - what data does this component need?
 interface TimerDisplayProps {
