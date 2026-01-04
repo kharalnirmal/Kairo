@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import  { useEffect, useState } from 'react'
 
 // Importing all components for Timer UI and controls
 import SoundToggle from '../component/SoundToggle'
