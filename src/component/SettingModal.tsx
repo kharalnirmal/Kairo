@@ -1,14 +1,22 @@
 import { useState } from 'react'
 
+/**
+ * Props for SettingsModal
+ * Controls visibility, initial values, and save behavior
+ */
 interface SettingsModalProps {
-  isOpen: boolean
-  onClose: () => void
+  isOpen: boolean                           // Controls whether modal is visible
+  onClose: () => void                      // Closes the modal
   onSave: (focusTime: number, breakTime: number, sessions: number) => void
-  currentFocusTime: number
-  currentBreakTime: number
-  currentSessions: number
+  currentFocusTime: number                 // Focus time in SECONDS
+  currentBreakTime: number                 // Break time in SECONDS
+  currentSessions: number                  // Number of Pomodoro sessions
 }
 
+/**
+ * Settings modal component
+ * Allows users to customize Pomodoro timings and sessions
+ */
 const SettingsModal = ({ 
   isOpen, 
   onClose, 
@@ -17,28 +25,50 @@ const SettingsModal = ({
   currentBreakTime,
   currentSessions 
 }: SettingsModalProps) => {
-  
+
+  /**
+   * Local state for form inputs
+   * Converted to minutes for better UX
+   */
   const [focusMinutes, setFocusMinutes] = useState(currentFocusTime / 60)
   const [breakMinutes, setBreakMinutes] = useState(currentBreakTime / 60)
   const [sessions, setSessions] = useState(currentSessions)
-  
+
+  /**
+   * If modal is closed, render nothing
+   * Prevents unnecessary DOM elements
+   */
   if (!isOpen) return null
-  
+
+  /**
+   * Handles saving user settings
+   * Converts minutes back to seconds before sending to parent
+   */
   const handleSave = () => {
-    onSave(focusMinutes * 60, breakMinutes * 60, sessions)
+    onSave(
+      focusMinutes * 60,
+      breakMinutes * 60,
+      sessions
+    )
     onClose()
   }
-  
-  
+
   return (
+    // Modal overlay (background blur + dark tint)
     <div className="z-50 fixed inset-0 flex justify-center items-center bg-black/50 backdrop-blur-sm">
+      
+      {/* Modal container */}
       <div className="bg-white/10 shadow-2xl backdrop-blur-lg p-8 border border-white/20 rounded-3xl w-[90%] max-w-md">
         
-        <h2 className="mb-6 font-bold text-white text-3xl text-center">Settings</h2>
-        
-        {/* Focus Time */}
+        <h2 className="mb-6 font-bold text-white text-3xl text-center">
+          Settings
+        </h2>
+
+        {/* Focus Time Input */}
         <div className="mb-6">
-          <label className="block mb-2 text-white text-lg">Focus Time (minutes)</label>
+          <label className="block mb-2 text-white text-lg">
+            Focus Time (minutes)
+          </label>
           <input 
             type="number"
             value={focusMinutes}
@@ -48,10 +78,12 @@ const SettingsModal = ({
             max="60"
           />
         </div>
-        
-        {/* Break Time */}
+
+        {/* Break Time Input */}
         <div className="mb-6">
-          <label className="block mb-2 text-white text-lg">Break Time (minutes)</label>
+          <label className="block mb-2 text-white text-lg">
+            Break Time (minutes)
+          </label>
           <input 
             type="number"
             value={breakMinutes}
@@ -61,10 +93,12 @@ const SettingsModal = ({
             max="30"
           />
         </div>
-        
-        {/* Sessions */}
+
+        {/* Sessions Input */}
         <div className="mb-8">
-          <label className="block mb-2 text-white text-lg">Sessions</label>
+          <label className="block mb-2 text-white text-lg">
+            Sessions
+          </label>
           <input 
             type="number"
             value={sessions}
@@ -74,8 +108,8 @@ const SettingsModal = ({
             max="10"
           />
         </div>
-        
-        {/* Buttons */}
+
+        {/* Action Buttons */}
         <div className="flex gap-4">
           <button 
             onClick={onClose}
@@ -83,6 +117,7 @@ const SettingsModal = ({
           >
             Cancel
           </button>
+
           <button 
             onClick={handleSave}
             className="flex-1 bg-accent hover:bg-accent/90 py-3 rounded-full font-semibold text-white transition-all"
@@ -90,12 +125,10 @@ const SettingsModal = ({
             Save
           </button>
         </div>
-        
+
       </div>
     </div>
   )
 }
 
 export default SettingsModal
-
-
