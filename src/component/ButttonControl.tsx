@@ -19,13 +19,13 @@ export function ButttonControl  ({onPlay,onPause,onRepeat,onSetting}:ButtonContr
   return (
     <div className='flex justify-center items-center gap-2 md:gap-3 pl-0 md:pl-32 lg:pl-20 xl:pl-0'>
         {/* Play Button - Triggers the onPlay function when clicked */}
-        <Button onClick={onPlay} className="btn-round"><FaRegCirclePlay  className='w-6 h-6' /></Button>
+        <Button onClick={onPlay} className="btn-round"><FaRegCirclePlay  className='md:text-4xl text-6xl' /></Button>
         {/* Pause Button - Triggers the onPause function when clicked */}
-        <Button onClick={onPause} className="btn-round"><FaRegCirclePause  className='w-6 h-6' /></Button>
+        <Button onClick={onPause} className="btn-round"><FaRegCirclePause  className='md:text-4xl text-6xl' /></Button>
         {/* Repeat Button - Triggers the onRepeat function when clicked */}
-        <Button onClick={onRepeat} className="btn-round"><RiResetLeftFill  className='w-6 h-6' /></Button>
+        <Button onClick={onRepeat} className="btn-round"><RiResetLeftFill  className='text-4xl md:text-4xl' /></Button>
         {/* Settings Button - Triggers the onSetting function when clicked */}
-        <Button onClick={onSetting} className="btn-round"><IoSettings   className='w-6 h-6' /></Button>
+        <Button onClick={onSetting} className="btn-round"><IoSettings   className='text-4xl md:text-4xl' /></Button>
     </div>
   )
 }

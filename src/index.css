@@ -21,7 +21,7 @@ body {
                       0 0 40px rgba(124, 111, 232, 0.4);
 }
 @utility btn-round{
-  @apply rounded-full font-semibold transition-all duration-200 hover:scale-105 active:scale-95 bg-accent text-white shadow-lg hover:shadow-xl md:h-18 md:w-18 h-14 w-14  flex justify-center items-center md:gap-4  
+  @apply rounded-full font-semibold transition-all duration-200 hover:scale-105 active:scale-95 bg-accent text-white shadow-lg hover:shadow-xl md:h-18 md:w-18 h-16 w-20  flex justify-center items-center md:gap-4 text-3xl md:text-5xl  
 }
 @font-face {
   font-family: Timer;

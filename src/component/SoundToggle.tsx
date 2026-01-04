@@ -77,7 +77,7 @@ const SoundToggle = () => {
   }, [currentSound])
 
   return (
-    <div className="flex gap-2">
+    <div className="flex gap-2 lg:gap-1">
       
       {/* Sound selector button */}
       <button 
