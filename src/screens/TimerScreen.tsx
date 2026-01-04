@@ -34,6 +34,13 @@ const calculateSessions = (focusTimeInSeconds: number): number => {
       setSecond(s => s - 1)
     }, 1000)
   }
+
+    
+    // Play warning sound 10 seconds before timer ends
+    if (second === 10 && isPlaying) {
+    const audio = new Audio('/music/warning.m4a')
+    audio.play().catch(() => {})
+    }
   
   // When seconds hits 0, handle completion
   if (second === 0 && isPlaying) {
