@@ -3,9 +3,10 @@ import { useState } from 'react'
 interface SettingsModalProps {
   isOpen: boolean
   onClose: () => void
-  onSave: (focusTime: number, breakTime: number) => void
+  onSave: (focusTime: number, breakTime: number, sessions: number) => void
   currentFocusTime: number
   currentBreakTime: number
+  currentSessions: number
 }
 
 const SettingsModal = ({ 
@@ -13,16 +14,18 @@ const SettingsModal = ({
   onClose, 
   onSave, 
   currentFocusTime, 
-  currentBreakTime 
+  currentBreakTime,
+  currentSessions 
 }: SettingsModalProps) => {
   
   const [focusMinutes, setFocusMinutes] = useState(currentFocusTime / 60)
   const [breakMinutes, setBreakMinutes] = useState(currentBreakTime / 60)
+  const [sessions, setSessions] = useState(currentSessions)
   
   if (!isOpen) return null
   
   const handleSave = () => {
-    onSave(focusMinutes * 60, breakMinutes * 60)
+    onSave(focusMinutes * 60, breakMinutes * 60, sessions)
     onClose()
   }
   
@@ -47,7 +50,7 @@ const SettingsModal = ({
         </div>
         
         {/* Break Time */}
-        <div className="mb-8">
+        <div className="mb-6">
           <label className="block mb-2 text-white text-lg">Break Time (minutes)</label>
           <input 
             type="number"
@@ -56,6 +59,19 @@ const SettingsModal = ({
             className="bg-white/20 px-4 py-3 border border-white/30 rounded-xl focus:outline-none focus:ring-2 focus:ring-accent w-full text-white text-xl text-center"
             min="1"
             max="30"
+          />
+        </div>
+        
+        {/* Sessions */}
+        <div className="mb-8">
+          <label className="block mb-2 text-white text-lg">Sessions</label>
+          <input 
+            type="number"
+            value={sessions}
+            onChange={(e) => setSessions(Number(e.target.value))}
+            className="bg-white/20 px-4 py-3 border border-white/30 rounded-xl focus:outline-none focus:ring-2 focus:ring-accent w-full text-white text-xl text-center"
+            min="1"
+            max="10"
           />
         </div>
         

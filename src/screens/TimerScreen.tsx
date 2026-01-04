@@ -14,16 +14,8 @@ const TimerScreen = () => {
   const [showSettings, setShowSettings] = useState(false)
   const [second, setSecond] = useState(focusTime)
   const [timerMode, setTimerMode] = useState('ready')
-
-  // Calculate how many sessions needed based on focus time
-const calculateSessions = (focusTimeInSeconds: number): number => {
-  const focusMinutes = focusTimeInSeconds / 60
-  
-  // Every 25 minutes = 1 session
-  // Example: 50 min = 2 sessions, 75 min = 3 sessions
-  return Math.ceil(focusMinutes / 25)}
-    const [totalSessions, setTotalSessions] = useState(calculateSessions(focusTime))
-    const [sessionCount, setSessionCount] = useState(0)
+  const [totalSessions, setTotalSessions] = useState(1)
+  const [sessionCount, setSessionCount] = useState(0)
 
 
  useEffect(() => {
@@ -37,7 +29,7 @@ const calculateSessions = (focusTimeInSeconds: number): number => {
 
     
     // Play warning sound 10 seconds before timer ends
-    if (second === 10 && isPlaying) {
+    if (second === 5 && isPlaying) {
     const audio = new Audio('/music/warning.m4a')
     audio.play().catch(() => {})
     }
@@ -62,9 +54,21 @@ const calculateSessions = (focusTimeInSeconds: number): number => {
 
   const handleTimerComplete = () => {
     if (timerMode === 'focus') {
-      setTimerMode('break')
-      setSecond(breakTime)
-      setisPlaying(true)
+      const newSessionCount = sessionCount + 1
+      setSessionCount(newSessionCount)
+      
+      // Check if all sessions are complete
+      if (newSessionCount >= totalSessions) {
+        setTimerMode('complete')
+        setSecond(0)
+        // Play completion alarm
+        const alarm = new Audio('/music/ending.m4a')
+        alarm.play().catch(() => {})
+      } else {
+        setTimerMode('break')
+        setSecond(breakTime)
+        setisPlaying(true)
+      }
     } else if (timerMode === 'break') {
       setTimerMode('focus')
       setSecond(focusTime)
@@ -73,13 +77,11 @@ const calculateSessions = (focusTimeInSeconds: number): number => {
   }
 
 
- const handleSaveSettings = (newFocusTime: number, newBreakTime: number) => {
+ const handleSaveSettings = (newFocusTime: number, newBreakTime: number, newSessions: number) => {
   setFocusTime(newFocusTime)
   setBreakTime(newBreakTime)
   setSecond(newFocusTime)
-  
-  // Recalculate total sessions based on new focus time
-  setTotalSessions(calculateSessions(newFocusTime))
+  setTotalSessions(newSessions)
   
   // Reset session count
   setSessionCount(0)
@@ -89,6 +91,7 @@ const calculateSessions = (focusTimeInSeconds: number): number => {
     setisPlaying(false)
     setTimerMode('ready')
     setSecond(focusTime)
+    setSessionCount(0)
   }
 
   const handlePause=() => setisPlaying(false)
@@ -113,9 +116,21 @@ const calculateSessions = (focusTimeInSeconds: number): number => {
       {/* Timer Controls Side */}
       <div className="z-10 relative flex flex-col justify-between py-4 w-full md:w-1/2">
 
+        {/* Session Counter - Top */}
+        <div className="flex justify-center mb-4">
+          <div className="bg-white/10 shadow-lg backdrop-blur-md px-6 py-3 border border-white/20 rounded-full">
+            <div className="flex items-center gap-2">
+              <span className="font-medium text-white/70 text-sm">Sessions:</span>
+              <span className="font-bold text-accent text-xl">{sessionCount}</span>
+              <span className="text-white/50 text-sm">/</span>
+              <span className="font-semibold text-white text-lg">{totalSessions}</span>
+            </div>
+          </div>
+        </div>
+
         {/* Center zone with glass effect */}
         <div className="flex flex-col flex-1 justify-center items-center gap-6 bg-white/5 shadow-2xl backdrop-blur-sm p-8 border border-white/10 rounded-3xl">
-          <TimerHeader state="focus" fontSize="large" />
+          <TimerHeader state={timerMode as "focus" | "break" | "ready" | "complete"} fontSize="large" />
           <TimerDisplay seconds={second} />
         </div>
 
@@ -133,7 +148,7 @@ const calculateSessions = (focusTimeInSeconds: number): number => {
         <div className='absolute bg-accent/40 blur-3xl rounded-full w-72 h-72 animate-pulse' />
         {/* Penguin */}
         <div className='relative'>
-          <Penguin state='focus' size='large' />
+          <Penguin state={timerMode as "focus" | "break" | "ready" | "complete"} size='large' />
         </div>
       </div>
       <SettingsModal
@@ -142,6 +157,7 @@ const calculateSessions = (focusTimeInSeconds: number): number => {
         onSave={handleSaveSettings}
         currentFocusTime={focusTime}
         currentBreakTime={breakTime}
+        currentSessions={totalSessions}
       />
     </div>
   )
