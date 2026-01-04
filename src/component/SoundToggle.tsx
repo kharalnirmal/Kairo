@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import useAudio from '../hooks/useAudio'
+import { GiSoundOff, GiSoundOn } from "react-icons/gi";
 
 const SoundToggle = () => {
   const sounds = ['BROWN NOISE', 'LOFI', 'White Noise'] as const
@@ -51,7 +52,7 @@ const SoundToggle = () => {
         onClick={handlePlayPause}
         className="bg-white/20 hover:bg-white/30 px-6 py-7 rounded-full text-white transition-all"
       >
-        {isPlaying ? '⏸️' : '▶️'}
+        {isPlaying ? <GiSoundOn  className='w-6 h-6' /> : <GiSoundOff className='w-6 h-6' />}
       </button>
     </div>
   )
