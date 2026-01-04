@@ -7,10 +7,10 @@ interface PenguinProps {
 export function Penguin  ({state , size = "medium" }:PenguinProps) {
 
  const PenguinImages = {
-    focus: "/images/focus.png",
-    break: "/images/Break.png",
-    ready: "/images/ready.png",
-    complete: "/images/complete.png",
+    focus: "/images/focus.webp",
+    break: "/images/break.webp",
+    ready: "/images/ready.webp",
+    complete: "/images/complete.webp",
  }
 
  const sizeStyles = {

@@ -17,7 +17,7 @@ const OnBoarding = ({onNext}:OnBoardingProps) => {
       {/* Image Layer */}
       <div className="relative flex flex-1 justify-center items-center w-full animate-fade-in">
         <img
-          src="/images/onBoarding/mix.svg"
+          src="/images/onBoarding/mix.png"
           alt="Penguin in clock"
           className="absolute w-auto h-[70vh] md:h-[75vh] object-contain pointer-events-none"
         />
