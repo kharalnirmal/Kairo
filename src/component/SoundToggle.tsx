@@ -1,17 +1,59 @@
-import React, { useState } from 'react'
-type SoundToggleProps = "brown"|"lofi|"|"beat"
+import { useState, useEffect } from 'react'
+import useAudio from '../hooks/useAudio'
 
 const SoundToggle = () => {
-  const [currentSound, setCurrentSound] = useState("Brown Noise")
-   const sounds = ["Brown Noise", "Lofi Beats", "White Noise"]
-   const handleToggleSound = ()=>{
+  const sounds = ['BROWN NOISE', 'LOFI', 'White Noise'] as const
+  type SoundKey = typeof sounds[number]
+  const [currentSound, setCurrentSound] = useState<SoundKey>('BROWN NOISE')
+  const [isPlaying, setIsPlaying] = useState(false)
+  
+  const soundUrls: Record<SoundKey, string> = {
+    'BROWN NOISE': '/music/brown.mp3',
+    'LOFI': '/music/lofi.mp3',
+    'White Noise': '/music/beats.mp3'
+  }
+  
+  const { play, pause } = useAudio(soundUrls[currentSound])
+  
+  const handleToggle = () => {
     const currentIndex = sounds.indexOf(currentSound)
-    const nextIndex = (currentIndex + 1 )% sounds.length
+    const nextIndex = (currentIndex + 1) % sounds.length
     setCurrentSound(sounds[nextIndex])
-   }
-      const buttonClass = "w-50 bg-white/20 hover:bg-white/30 backdrop-blur-sm px-12 py-7 rounded-[60px] font-semibold text-white hover:scale-105 active:scale-95"
+  }
+  
+  const handlePlayPause = () => {
+    if (isPlaying) {
+      pause()
+    } else {
+      play()
+    }
+    setIsPlaying(!isPlaying)
+  }
+  
+  // Auto-play when sound changes
+  useEffect(() => {
+    if (isPlaying) {
+      pause()
+      setTimeout(() => play(), 100)
+    }
+  }, [currentSound])
+  
   return (
-  <button  onClick={handleToggleSound} className= {buttonClass} >{currentSound}</button>
+    <div className="flex gap-2">
+      <button 
+        onClick={handleToggle}
+        className="bg-accent/80 hover:bg-accent px-6 py-7 rounded-full w-48 font-semibold text-white transition-all"
+      >
+        {currentSound}
+      </button>
+      
+      <button 
+        onClick={handlePlayPause}
+        className="bg-white/20 hover:bg-white/30 px-6 py-7 rounded-full text-white transition-all"
+      >
+        {isPlaying ? '⏸️' : '▶️'}
+      </button>
+    </div>
   )
 }
 

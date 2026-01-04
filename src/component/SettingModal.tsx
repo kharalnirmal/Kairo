@@ -26,6 +26,7 @@ const SettingsModal = ({
     onClose()
   }
   
+  
   return (
     <div className="z-50 fixed inset-0 flex justify-center items-center bg-black/50 backdrop-blur-sm">
       <div className="bg-white/10 shadow-2xl backdrop-blur-lg p-8 border border-white/20 rounded-3xl w-[90%] max-w-md">
@@ -80,3 +81,5 @@ const SettingsModal = ({
 }
 
 export default SettingsModal
+
+
