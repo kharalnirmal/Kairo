@@ -17,7 +17,7 @@ interface ButtonControlProps{
 export function ButttonControl  ({onPlay,onPause,onRepeat,onSetting}:ButtonControlProps)  {
 
   return (
-    <div className='flex justify-center items-center gap-2 md:gap-3 pl-0 md:pl-32 lg:pl-18 xl:pl-07'>
+    <div className='flex justify-center items-center gap-2 md:gap-3 pl-0 md:pl-32 lg:pl-20 xl:pl-0'>
         {/* Play Button - Triggers the onPlay function when clicked */}
         <Button onClick={onPlay} className="btn-round"><FaRegCirclePlay  className='w-6 h-6' /></Button>
         {/* Pause Button - Triggers the onPause function when clicked */}
