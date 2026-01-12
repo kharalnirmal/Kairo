@@ -4,24 +4,24 @@
   --color-primary: #5b4fdb; /* Your main purple */
   --color-primary-dark: ##3d2f8f; /* Darker purple for bg */
   --color-accent: #7c6fe8; /* Lighter purple for buttons */
-  --font-display: "Poppins","Segoe UI", system-ui, sans-serif;
+  --font-display: "Poppins", "Segoe UI", system-ui, sans-serif;
 }
 body {
   margin: 0;
   padding: 0;
-  background: linear-gradient(135deg, #3D2F8F 0%, #5B4FDB 100%);
+  background: linear-gradient(135deg, #3d2f8f 0%, #5b4fdb 100%);
   min-height: 100vh;
   color: white;
   box-sizing: border-box;
   font-family: var(--font-display);
 }
 @utility timer-digits {
-   font-family: 'Courier New', monospace;
-   text-shadow: 0 0 20px rgba(124, 111, 232, 0.8),
-                      0 0 40px rgba(124, 111, 232, 0.4);
+  font-family: "Courier New", monospace;
+  text-shadow: 0 0 20px rgba(124, 111, 232, 0.8),
+    0 0 40px rgba(124, 111, 232, 0.4);
 }
-@utility btn-round{
-  @apply rounded-full font-semibold transition-all duration-200 hover:scale-105 active:scale-95 bg-accent text-white shadow-lg hover:shadow-xl md:h-18 md:w-18 h-16 w-20  flex justify-center items-center md:gap-4 text-3xl md:text-5xl  
+@utility btn-round {
+  @apply rounded-full font-semibold transition-all duration-200 hover:scale-105 active:scale-95 bg-accent text-white shadow-lg hover:shadow-xl md:h-18 md:w-18 h-16 w-20  flex justify-center items-center md:gap-4 text-3xl md:text-5xl;
 }
 @font-face {
   font-family: Timer;
@@ -64,12 +64,34 @@ body {
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(-20px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @utility text-glow-soft {
-  text-shadow:
-    0 0 3px rgba(255, 255, 255, 0.25),
+  text-shadow: 0 0 3px rgba(255, 255, 255, 0.25),
     0 0 6px rgba(255, 255, 255, 0.15);
+}
+
+@utility animate-celebration {
+  animation: celebration linear forwards;
+}
+
+@keyframes celebration {
+  0% {
+    top: -50px;
+    opacity: 1;
+    transform: translateY(0) rotate(0deg);
+  }
+  100% {
+    top: 100vh;
+    opacity: 0;
+    transform: translateY(0) rotate(720deg);
+  }
 }

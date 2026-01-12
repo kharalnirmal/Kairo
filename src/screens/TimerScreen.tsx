@@ -133,6 +133,7 @@ const TimerScreen = () => {
     newBreakTime: number,
     newSessions: number
   ) => {
+    setisPlaying(false); // stop timer
     setFocusTime(newFocusTime); // update focus time
     setBreakTime(newBreakTime); // update break time
     setSecond(newFocusTime); // reset countdown
@@ -168,6 +169,29 @@ const TimerScreen = () => {
         style={{ animationDelay: "1s" }}
       />
       <div className="top-1/2 left-1/2 absolute bg-blue-500/10 blur-3xl rounded-full w-[500px] h-[500px] -translate-x-1/2 -translate-y-1/2" />
+
+      {/* Celebration Animation on Completion */}
+      {timerMode === "complete" && (
+        <>
+          {[...Array(15)].map((_, i) => (
+            <div
+              key={i}
+              className="absolute text-4xl animate-celebration"
+              style={{
+                left: `${Math.random() * 100}%`,
+                animationDelay: `${Math.random() * 3}s`,
+                animationDuration: `${6 + Math.random() * 4}s`,
+              }}
+            >
+              {
+                ["🎉", "🎊", "⭐", "✨", "🎈", "🌟"][
+                  Math.floor(Math.random() * 6)
+                ]
+              }
+            </div>
+          ))}
+        </>
+      )}
 
       {/* Timer Controls side */}
       <div className="z-10 relative flex flex-col justify-between py-4 w-full md:w-1/2">
@@ -213,6 +237,33 @@ const TimerScreen = () => {
       {/* Penguin Mascot side */}
       <div className="z-10 relative flex justify-center items-center w-full md:w-1/2">
         <div className="absolute bg-accent/40 blur-3xl rounded-full w-72 h-72 animate-pulse" />
+
+        {/* Only 2 stars and 2 snowflakes with subtle animations */}
+        <div
+          className="-top-10 left-10 absolute opacity-80 text-3xl animate-pulse"
+          style={{ animationDuration: "3s" }}
+        >
+          ⭐
+        </div>
+        <div
+          className="-top-5 right-10 absolute opacity-80 text-3xl animate-pulse"
+          style={{ animationDuration: "3.5s", animationDelay: "1s" }}
+        >
+          ⭐
+        </div>
+        <div
+          className="bottom-10 -left-5 absolute opacity-70 text-3xl animate-pulse"
+          style={{ animationDuration: "4s" }}
+        >
+          ❄️
+        </div>
+        <div
+          className="right-10 bottom-5 absolute opacity-70 text-3xl animate-pulse"
+          style={{ animationDuration: "4.5s", animationDelay: "1.5s" }}
+        >
+          ❄️
+        </div>
+
         <div className="relative">
           <Penguin
             state={timerMode as "focus" | "break" | "ready" | "complete"}

@@ -15,7 +15,7 @@ const SoundToggle = ({ isTimerPlaying = false }: SoundToggleProps) => {
    * List of available sound labels
    * `as const` ensures strict literal typing
    */
-  const sounds = ["BROWN NOISE", "LOFI", "White Noise"] as const;
+  const sounds = ["BROWN NOISE", "LOFI", "White Noise", "JAZZ"] as const;
 
   /**
    * Type derived from sound labels
@@ -37,6 +37,7 @@ const SoundToggle = ({ isTimerPlaying = false }: SoundToggleProps) => {
     "BROWN NOISE": "/music/brown.mp3",
     LOFI: "/music/lofi.mp3",
     "White Noise": "/music/beats.mp3",
+    JAZZ: "/music/jazz.m4a",
   };
 
   /**
