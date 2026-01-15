@@ -101,29 +101,29 @@ const TimerScreen = () => {
 
   /** What happens when a timer finishes */
   const handleTimerComplete = () => {
-    // Play completion alarm
-    const alarm = new Audio("/music/ending.m4a");
-    alarm.play().catch(() => {});
-
     if (timerMode === "focus") {
       const newSessionCount = sessionCount + 1;
       setSessionCount(newSessionCount);
 
       // If all sessions done
       if (newSessionCount >= totalSessions) {
+        // Play completion alarm only when all sessions are done
+        const alarm = new Audio("/music/ending.m4a");
+        alarm.play().catch(() => {});
+
         setTimerMode("complete"); // mark timer complete
         setSecond(0); // stop countdown
       } else {
         // Otherwise, go to break session
         setTimerMode("break");
         setSecond(breakTime);
-        setisPlaying(false); // Don't auto-start break
+        setisPlaying(true); // Auto-start break
       }
     } else if (timerMode === "break") {
       // After break, start next focus session
       setTimerMode("focus");
       setSecond(focusTime);
-      setisPlaying(false); // Don't auto-start focus
+      setisPlaying(true); // Auto-start focus
     }
   };
 
