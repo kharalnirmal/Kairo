@@ -55,6 +55,9 @@ const TimerScreen = () => {
   /** How many focus sessions have been completed */
   const [sessionCount, setSessionCount] = useState(0);
 
+  /** Track if warning sound has already played for current session */
+  const [warningPlayed, setWarningPlayed] = useState(false);
+
   /**
    * Main timer effect
    * Runs every time `isPlaying` or `second` changes
@@ -70,10 +73,16 @@ const TimerScreen = () => {
       }, 1000);
     }
 
-    // Play warning sound 5 seconds before timer ends
-    if (second === 5 && isPlaying) {
+    // Play warning sound 5 seconds before focus or break session ends (only once per session)
+    if (
+      second === 5 &&
+      isPlaying &&
+      (timerMode === "focus" || timerMode === "break") &&
+      !warningPlayed
+    ) {
       const audio = new Audio("/music/warning.m4a");
       audio.play().catch(() => {}); // ignore errors if user blocked audio
+      setWarningPlayed(true); // Mark warning as played
     }
 
     // When countdown reaches 0, stop timer and handle completion
@@ -121,6 +130,7 @@ const TimerScreen = () => {
         // Otherwise, go to break session
         setTimerMode("break");
         setSecond(breakTime);
+        setWarningPlayed(false); // Reset warning for new session
         setisPlaying(true); // Auto-start break
       }
     } else if (timerMode === "break") {
@@ -131,6 +141,7 @@ const TimerScreen = () => {
       // After break, start next focus session
       setTimerMode("focus");
       setSecond(focusTime);
+      setWarningPlayed(false); // Reset warning for new session
       setisPlaying(true); // Auto-start focus
     }
   };
@@ -149,6 +160,7 @@ const TimerScreen = () => {
 
     setSessionCount(0); // reset completed sessions
     setTimerMode("ready"); // reset mode to ready
+    setWarningPlayed(false); // reset warning flag
   };
 
   /** Reset timer to start over */
@@ -157,6 +169,7 @@ const TimerScreen = () => {
     setTimerMode("ready"); // reset mode
     setSecond(focusTime); // reset countdown
     setSessionCount(0); // reset session count
+    setWarningPlayed(false); // reset warning flag
   };
 
   /** Pause timer */
