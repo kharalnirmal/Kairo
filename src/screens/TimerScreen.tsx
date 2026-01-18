@@ -114,12 +114,20 @@ const TimerScreen = () => {
         setTimerMode("complete"); // mark timer complete
         setSecond(0); // stop countdown
       } else {
+        // Play warning sound when focus session ends
+        const warning = new Audio("/music/warning.m4a");
+        warning.play().catch(() => {});
+
         // Otherwise, go to break session
         setTimerMode("break");
         setSecond(breakTime);
         setisPlaying(true); // Auto-start break
       }
     } else if (timerMode === "break") {
+      // Play warning sound when break session ends
+      const warning = new Audio("/music/warning.m4a");
+      warning.play().catch(() => {});
+
       // After break, start next focus session
       setTimerMode("focus");
       setSecond(focusTime);
@@ -131,7 +139,7 @@ const TimerScreen = () => {
   const handleSaveSettings = (
     newFocusTime: number,
     newBreakTime: number,
-    newSessions: number
+    newSessions: number,
   ) => {
     setisPlaying(false); // stop timer
     setFocusTime(newFocusTime); // update focus time
