@@ -251,7 +251,10 @@ const TimerScreen = () => {
             onRepeat={handleRepeat}
             onSetting={handlesetting}
           />
-          <SoundToggle isTimerPlaying={isPlaying} />
+          <SoundToggle
+            isTimerPlaying={isPlaying}
+            timerMode={timerMode as "focus" | "break" | "ready" | "complete"}
+          />
         </div>
       </div>
 
