@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import useAudio from "../hooks/useAudio";
 import { GiSoundOff, GiSoundOn } from "react-icons/gi";
 
@@ -8,36 +8,57 @@ import { GiSoundOff, GiSoundOn } from "react-icons/gi";
  */
 interface SoundToggleProps {
   isTimerPlaying?: boolean;
+  timerMode: "focus" | "break" | "ready" | "complete";
 }
 
-const SoundToggle = ({ isTimerPlaying = false }: SoundToggleProps) => {
+const SoundToggle = ({
+  isTimerPlaying = false,
+  timerMode,
+}: SoundToggleProps) => {
   /**
    * List of available sound labels
    * `as const` ensures strict literal typing
    */
-  const sounds = ["BROWN NOISE", "LOFI", "White Noise", "JAZZ"] as const;
+  const sounds = [
+    "BROWN NOISE",
+    "LOFI",
+    "White Noise",
+    "JAZZ",
+    "HIPHOP",
+  ] as const;
 
   /**
    * Type derived from sound labels
    * Prevents invalid sound keys
    */
   type SoundKey = (typeof sounds)[number];
+  type PlayableSound = SoundKey | "BREAK";
 
   // Currently selected sound
-  const [currentSound, setCurrentSound] = useState<SoundKey>("BROWN NOISE");
+  const [preferredSound, setPreferredSound] = useState<SoundKey>("BROWN NOISE");
+
+  // Sound actually being played (can temporarily be BREAK)
+  const [currentSound, setCurrentSound] =
+    useState<PlayableSound>("BROWN NOISE");
 
   // Tracks whether audio is currently playing
   const [isPlaying, setIsPlaying] = useState(false);
+
+  // Store state before entering break to restore afterwards
+  const previousPlayingRef = useRef(false);
+  const wasInBreakRef = useRef(false);
 
   /**
    * Mapping of sound labels to audio file paths
    * Ensures type-safe access using SoundKey
    */
-  const soundUrls: Record<SoundKey, string> = {
+  const soundUrls: Record<PlayableSound, string> = {
     "BROWN NOISE": "/music/brown.mp3",
     LOFI: "/music/lofi.mp3",
     "White Noise": "/music/beats.mp3",
     JAZZ: "/music/jazz.m4a",
+    HIPHOP: "/music/break.mp3",
+    BREAK: "/music/break.mp3",
   };
 
   /**
@@ -51,9 +72,17 @@ const SoundToggle = ({ isTimerPlaying = false }: SoundToggleProps) => {
    * Moves to next sound and loops back to start
    */
   const handleToggle = () => {
-    const currentIndex = sounds.indexOf(currentSound);
+    const currentIndex = sounds.indexOf(preferredSound);
     const nextIndex = (currentIndex + 1) % sounds.length;
-    setCurrentSound(sounds[nextIndex]);
+    const nextSound = sounds[nextIndex];
+
+    // Update preferred sound always so we know what to resume after break
+    setPreferredSound(nextSound);
+
+    // Only switch active sound when not in break override
+    if (timerMode !== "break") {
+      setCurrentSound(nextSound);
+    }
   };
 
   /**
@@ -81,6 +110,26 @@ const SoundToggle = ({ isTimerPlaying = false }: SoundToggleProps) => {
   }, [currentSound]);
 
   /**
+   * Auto-switch to break music and restore previous track afterwards.
+   */
+  useEffect(() => {
+    if (timerMode === "break" && !wasInBreakRef.current) {
+      // Entering break: remember prior play state, force break track on
+      previousPlayingRef.current = isPlaying;
+      wasInBreakRef.current = true;
+      setCurrentSound("BREAK");
+      setIsPlaying(true);
+    }
+
+    if (timerMode !== "break" && wasInBreakRef.current) {
+      // Exiting break: restore preferred track and prior play/pause
+      wasInBreakRef.current = false;
+      setCurrentSound(preferredSound);
+      setIsPlaying(previousPlayingRef.current);
+    }
+  }, [timerMode, preferredSound, isPlaying]);
+
+  /**
    * Sync background music with timer state
    * Pause music when timer pauses, resume when timer plays
    */
@@ -92,6 +141,18 @@ const SoundToggle = ({ isTimerPlaying = false }: SoundToggleProps) => {
     }
   }, [isTimerPlaying]);
 
+  /**
+   * Ensure playback state actually drives the audio element.
+   * This covers cases where we set isPlaying programmatically (e.g., entering break).
+   */
+  useEffect(() => {
+    if (isPlaying) {
+      play();
+    } else {
+      pause();
+    }
+  }, [isPlaying, currentSound]);
+
   return (
     <div className="flex gap-2 lg:gap-1">
       {/* Sound selector button */}
@@ -99,7 +160,7 @@ const SoundToggle = ({ isTimerPlaying = false }: SoundToggleProps) => {
         onClick={handleToggle}
         className="bg-accent/80 hover:bg-accent px-6 py-7 rounded-full w-48 font-semibold text-white transition-all"
       >
-        {currentSound}
+        {timerMode === "break" ? "BREAK" : preferredSound}
       </button>
 
       {/* Play / Pause toggle */}
