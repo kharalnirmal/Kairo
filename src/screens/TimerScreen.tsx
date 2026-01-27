@@ -223,7 +223,7 @@ const TimerScreen = () => {
               <span className="font-medium text-white/70 text-sm">
                 Sessions:
               </span>
-              <span className="font-bold text-accent text-xl">
+              <span className="font-bold text-white/90 text-xl">
                 {sessionCount}
               </span>
               <span className="text-white/50 text-sm">/</span>
